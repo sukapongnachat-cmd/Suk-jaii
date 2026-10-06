@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suk-Jai (สุขใจ) - Inclusive Community & Health Platform</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans & Prompt for clean Thai typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        sage: {
+                            50: '#f4f8f5',
+                            100: '#e5efe7',
+                            500: '#2E6F40',
+                            600: '#245933',
+                            700: '#1b4326',
+                        },
+                        teal: {
+                            800: '#0D3B36',
+                            900: '#072623',
+                        },
+                        amber: {
+                            400: '#f59e0b',
+                            500: '#E8913B',
+                            600: '#d97706',
+                        },
+                        ivory: '#FBF9F5',
+                    },
+                    fontFamily: {
+                        sans: ['"Prompt"', '"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FBF9F5;
+            font-family: 'Prompt', 'Plus Jakarta Sans', sans-serif;
+            transition: font-size 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dynamic Font Size Classes */
+        html.font-sm { font-size: 14px; }
+        html.font-md { font-size: 16px; }
+        html.font-lg { font-size: 18px; }
+        html.font-xl { font-size: 20px; }
+
+        /* High Contrast Dark Mode Adjustments */
+        .dark body {
+            background-color: #111827 !important;
+            color: #F9FAFB !important;
+        }
+        .dark .bg-ivory { background-color: #111827 !important; }
+        .dark .bg-white { background-color: #1F2937 !important; color: #F9FAFB !important; }
+        .dark .text-teal-800 { color: #81E6D9 !important; }
+        .dark .text-gray-700 { color: #E5E7EB !important; }
+        .dark .text-gray-600 { color: #D1D5DB !important; }
+        .dark .border-gray-200 { border-color: #374151 !important; }
+
+        /* Custom Scrollbar for Chat & Lists */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2E6F40;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="text-gray-800 flex flex-col min-h-screen">
+
+    <!-- TOP ACCESSIBILITY BAR -->
+    <header class="bg-teal-800 text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap justify-between items-center text-sm">
+            <!-- Left: High Accessibility Controls -->
+            <div class="flex items-center space-x-3 my-1">
+                <span class="font-semibold hidden sm:inline"><i class="fa-solid fa-universal-access mr-1">null</i> Accessibility / ความสะดวก:</span>
+                
+                <!-- Font Resizer -->
+                <div class="inline-flex rounded-lg bg-teal-900 p-1 border border-teal-700" role="group">
+                    <button onclick="changeFontSize('sm')" class="px-2 py-1 text-xs rounded hover:bg-sage-500 transition" title="Small Font">A-</button>
+                    <button onclick="changeFontSize('md')" class="px-2 py-1 text-xs rounded hover:bg-sage-500 transition font-bold" title="Normal Font">A</button>
+                    <button onclick="changeFontSize('lg')" class="px-2 py-1 text-xs rounded hover:bg-sage-500 transition font-bold text-base" title="Large Font">A+</button>
+                    <button onclick="changeFontSize('xl')" class="px-2 py-1 text-xs rounded hover:bg-sage-500 transition font-bold text-lg" title="Extra Large Font">A++</button>
+                </div>
+
+                <!-- High Contrast Toggle -->
+                <button onclick="toggleHighContrast()" class="bg-amber-500 hover:bg-amber-600 text-teal-900 font-bold px-3 py-1 rounded-lg text-xs flex items-center transition">
+                    <i class="fa-solid fa-circle-half-stroke mr-1"></i> Mode
+                </button>
+
+                <!-- Text to Speech -->
+                <button onclick="toggleSpeech()" id="ttsBtn" class="bg-sage-500 hover:bg-sage-600 text-white font-medium px-3 py-1 rounded-lg text-xs flex items-center transition">
+                    <i class="fa-solid fa-volume-high mr-1"></i> <span id="ttsText">Audio Assistant</span>
+                </button>
+            </div>
+
+            <!-- Right: Emergency Call Support -->
+            <div class="flex items-center space-x-2 my-1">
+                <a href="tel:021234567" class="bg-red-600 hover:bg-red-700 text-white font-bold px-3 py-1.5 rounded-full text-xs sm:text-sm flex items-center animate-pulse shadow-md">
+                    <i class="fa-solid fa-phone-volume mr-2"></i> Hotline: 02-123-4567
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN NAVIGATION HEADER -->
+    <nav class="bg-white border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            
+            <!-- Brand Logo -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showTab('home')">
+                <div class="w-12 h-12 rounded-2xl bg-sage-500 text-white flex items-center justify-center font-bold text-2xl shadow-lg transform rotate-3">
+                    สุข
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-teal-800 tracking-tight leading-none">Suk-Jai <span class="text-amber-500">(สุขใจ)</span></h1>
+                    <p class="text-xs text-gray-500 font-medium">Joyful Community & Health Hub for Everyone</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="flex flex-wrap justify-center gap-2 text-sm sm:text-base font-semibold">
+                <button onclick="showTab('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-xl bg-sage-500 text-white shadow-md transition">
+                    <i class="fa-solid fa-house mr-1.5"></i> Home
+                </button>
+                <button onclick="showTab('club')" id="nav-club" class="nav-btn px-4 py-2 rounded-xl text-gray-700 hover:bg-sage-100 transition">
+                    <i class="fa-solid fa-users mr-1.5 text-sage-500"></i> Join Club
+                </button>
+                <button onclick="showTab('chat')" id="nav-chat" class="nav-btn px-4 py-2 rounded-xl text-gray-700 hover:bg-sage-100 transition">
+                    <i class="fa-solid fa-comments mr-1.5 text-sage-500"></i> Chat Rooms
+                </button>
+                <button onclick="showTab('health')" id="nav-health" class="nav-btn px-4 py-2 rounded-xl text-gray-700 hover:bg-sage-100 transition">
+                    <i class="fa-solid fa-user-doctor mr-1.5 text-sage-500"></i> Health Consult
+                </button>
+                <button onclick="showTab('games')" id="nav-games" class="nav-btn px-4 py-2 rounded-xl text-gray-700 hover:bg-sage-100 transition">
+                    <i class="fa-solid fa-gamepad mr-1.5 text-sage-500"></i> Games
+                </button>
+                <button onclick="showTab('learn')" id="nav-learn" class="nav-btn px-4 py-2 rounded-xl text-gray-700 hover:bg-sage-100 transition">
+                    <i class="fa-solid fa-lightbulb mr-1.5 text-sage-500"></i> Share & Learn
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT CONTAINERS -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6">
+
+        <!-- 1. HOME TAB -->
+        <section id="tab-home" class="tab-content space-y-8">
+            
+            <!-- Hero Welcome Banner -->
+            <div class="bg-gradient-to-r from-teal-800 to-sage-600 rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
+                <div class="relative z-10 max-w-2xl">
+                    <span class="bg-amber-500 text-teal-900 font-bold px-3 py-1 rounded-full text-xs uppercase tracking-wider mb-3 inline-block">Welcome to Suk-Jai</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold mb-4 leading-tight">A Safe, Friendly Place for Seniors & Family</h2>
+                    <p class="text-sage-100 text-base sm:text-lg mb-6">Connect with friends, keep your mind active with simple games, consult healthcare volunteers, and share lifetime skills.</p>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="speakText('ยินดีต้อนรับสู่เว็บไซต์สุขใจ พื้นที่แห่งความสุขสำหรับทุกวัย')" class="bg-white text-teal-800 hover:bg-sage-50 font-bold px-5 py-3 rounded-2xl shadow-lg flex items-center text-sm sm:text-base transition">
+                            <i class="fa-solid fa-circle-play text-xl text-amber-500 mr-2"></i> Listen Audio Intro
+                        </button>
+                        <button onclick="showTab('club')" class="bg-amber-500 hover:bg-amber-600 text-teal-900 font-bold px-5 py-3 rounded-2xl shadow-lg text-sm sm:text-base transition">
+                            Explore Meetups <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Access 5 Main Hub Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Card 1: Club Meetups -->
+                <div onclick="showTab('club')" class="bg-white p-6 rounded-3xl border-2 border-sage-100 shadow-sm hover:shadow-xl hover:border-sage-500 transition cursor-pointer group">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-teal-800 mb-2">Join Our Club! <i class="fa-solid fa-arrow-right text-xs opacity-0 group-hover:opacity-100 transition"></i></h3>
+                    <p class="text-gray-600 text-sm mb-4">Bi-weekly meetups for coffee chats, group cooking, and walking clubs in your neighborhood.</p>
+                    <span class="inline-flex items-center text-sage-600 font-bold text-sm">View Calendar & RSVP <i class="fa-solid fa-chevron-right ml-1 text-xs"></i></span>
+                </div>
+
+                <!-- Card 2: Topic Chat Rooms -->
+                <div onclick="showTab('chat')" class="bg-white p-6 rounded-3xl border-2 border-sage-100 shadow-sm hover:shadow-xl hover:border-sage-500 transition cursor-pointer group">
+                    <div class="w-14 h-14 rounded-2xl bg-teal-100 text-teal-800 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-teal-800 mb-2">Topic Chat Rooms <i class="fa-solid fa-arrow-right text-xs opacity-0 group-hover:opacity-100 transition"></i></h3>
+                    <p class="text-gray-600 text-sm mb-4">Chat about Gardening, Tech Help, Cooking recipes, or Health with easy big-button stickers!</p>
+                    <span class="inline-flex items-center text-sage-600 font-bold text-sm">Enter Chat Rooms <i class="fa-solid fa-chevron-right ml-1 text-xs"></i></span>
+                </div>
+
+                <!-- Card 3: Health Consultation -->
+                <div onclick="showTab('health')" class="bg-white p-6 rounded-3xl border-2 border-sage-100 shadow-sm hover:shadow-xl hover:border-sage-500 transition cursor-pointer group">
+                    <div class="w-14 h-14 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-teal-800 mb-2">Health Consult <i class="fa-solid fa-arrow-right text-xs opacity-0 group-hover:opacity-100 transition"></i></h3>
+                    <p class="text-gray-600 text-sm mb-4">Ask healthcare questions, read tips for all age groups, or request phone check-ins.</p>
+                    <span class="inline-flex items-center text-sage-600 font-bold text-sm">Ask Health Advisor <i class="fa-solid fa-chevron-right ml-1 text-xs"></i></span>
+                </div>
+
+                <!-- Card 4: Online Games -->
+                <div onclick="showTab('games')" class="bg-white p-6 rounded-3xl border-2 border-sage-100 shadow-sm hover:shadow-xl hover:border-sage-500 transition cursor-pointer group">
+                    <div class="w-14 h-14 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-dice"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-teal-800 mb-2">Fun Brain Games <i class="fa-solid fa-arrow-right text-xs opacity-0 group-hover:opacity-100 transition"></i></h3>
+                    <p class="text-gray-600 text-sm mb-4">Play Senior Bingo with automatic caller, Memory Card matching, and simple Chess puzzles.</p>
+                    <span class="inline-flex items-center text-sage-600 font-bold text-sm">Play Games Now <i class="fa-solid fa-chevron-right ml-1 text-xs"></i></span>
+                </div>
+
+                <!-- Card 5: Share & Learn -->
+                <div onclick="showTab('learn')" class="bg-white p-6 rounded-3xl border-2 border-sage-100 shadow-sm hover:shadow-xl hover:border-sage-500 transition cursor-pointer group md:col-span-2 lg:col-span-2">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-teal-800 mb-2">Share & Learn Corner <i class="fa-solid fa-arrow-right text-xs opacity-0 group-hover:opacity-100 transition"></i></h3>
+                            <p class="text-gray-600 text-sm">Intergenerational knowledge hub: Explore easy step-by-step tutorials on crafts, family recipes, and gardening hacks shared by community members.</p>
+                        </div>
+                        <button class="bg-sage-500 text-white font-bold px-6 py-3 rounded-2xl shrink-0 group-hover:bg-sage-600 transition shadow">
+                            Browse Tutorials <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 2. JOIN CLUB TAB -->
+        <section id="tab-club" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-gray-200 shadow-sm">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-teal-800">Bi-Weekly Community Meetups</h2>
+                        <p class="text-gray-600 text-sm">Join fun offline and online activities held every 2 weeks!</p>
+                    </div>
+                    <button onclick="openRsvpModal('General Meetup')" class="bg-amber-500 hover:bg-amber-600 text-teal-900 font-bold px-5 py-3 rounded-2xl text-sm transition shadow-md">
+                        <i class="fa-solid fa-plus-circle mr-2"></i> Register for Next Event
+                    </button>
+                </div>
+
+                <!-- Event Schedule Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- Event 1 -->
+                    <div class="bg-sage-50 p-5 rounded-2xl border border-sage-200 flex flex-col justify-between">
+                        <div>
+                            <span class="bg-sage-500 text-white text-xs font-bold px-2.5 py-1 rounded-full mb-3 inline-block">This Saturday</span>
+                            <h3 class="text-lg font-bold text-teal-800 mb-1">Morning Coffee & Tech Chat</h3>
+                            <p class="text-gray-600 text-xs mb-3"><i class="fa-solid fa-clock text-amber-500 mr-1"></i> Sat 09:00 - 11:00 AM | Lumpini Park</p>
+                            <p class="text-gray-700 text-sm mb-4">Enjoy morning tea while volunteers help setup smartphone fonts and LINE app sticker shortcuts.</p>
+                        </div>
+                        <button onclick="openRsvpModal('Morning Coffee & Tech Chat')" class="w-full bg-sage-500 hover:bg-sage-600 text-white font-bold py-2.5 rounded-xl text-sm transition">
+                            RSVP Free <i class="fa-solid fa-check ml-1"></i>
+                        </button>
+                    </div>
+
+                    <!-- Event 2 -->
+                    <div class="bg-sage-50 p-5 rounded-2xl border border-sage-200 flex flex-col justify-between">
+                        <div>
+                            <span class="bg-amber-500 text-teal-900 text-xs font-bold px-2.5 py-1 rounded-full mb-3 inline-block">In 2 Weeks</span>
+                            <h3 class="text-lg font-bold text-teal-800 mb-1">Herbal Tea & Cooking Class</h3>
+                            <p class="text-gray-600 text-xs mb-3"><i class="fa-solid fa-clock text-amber-500 mr-1"></i> Sun 10:00 - 12:30 PM | Suk-Jai Center</p>
+                            <p class="text-gray-700 text-sm mb-4">Learn how to brew healthy Thai herbs and share traditional dessert recipes together.</p>
+                        </div>
+                        <button onclick="openRsvpModal('Herbal Tea & Cooking Class')" class="w-full bg-sage-500 hover:bg-sage-600 text-white font-bold py-2.5 rounded-xl text-sm transition">
+                            RSVP Free <i class="fa-solid fa-check ml-1"></i>
+                        </button>
+                    </div>
+
+                    <!-- Event 3 -->
+                    <div class="bg-sage-50 p-5 rounded-2xl border border-sage-200 flex flex-col justify-between">
+                        <div>
+                            <span class="bg-teal-800 text-white text-xs font-bold px-2.5 py-1 rounded-full mb-3 inline-block">Online Zoom</span>
+                            <h3 class="text-lg font-bold text-teal-800 mb-1">Gentle Chair Yoga & Stretch</h3>
+                            <p class="text-gray-600 text-xs mb-3"><i class="fa-solid fa-clock text-amber-500 mr-1"></i> Wed 04:00 - 05:00 PM | Online</p>
+                            <p class="text-gray-700 text-sm mb-4">Easy guided light stretches designed specifically for joint health and relaxation at home.</p>
+                        </div>
+                        <button onclick="openRsvpModal('Gentle Chair Yoga')" class="w-full bg-sage-500 hover:bg-sage-600 text-white font-bold py-2.5 rounded-xl text-sm transition">
+                            Get Zoom Link <i class="fa-solid fa-video ml-1"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. TOPIC CHAT ROOMS TAB -->
+        <section id="tab-chat" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden flex flex-col md:flex-row h-[600px]">
+                
+                <!-- Left: Topic Channel Selector Sidebar -->
+                <div class="w-full md:w-1/3 bg-gray-50 border-r border-gray-200 p-4 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-teal-800 mb-3 px-2">Select Topic Channel</h3>
+                        <div class="space-y-2">
+                            <button onclick="switchChatChannel('gardening')" id="channel-gardening" class="channel-btn w-full text-left px-4 py-3 rounded-2xl font-semibold text-sm flex items-center justify-between bg-sage-500 text-white shadow">
+                                <span><i class="fa-solid fa-seedling mr-2"></i> Gardening & Backyard</span>
+                                <span class="bg-white text-sage-600 text-xs px-2 py-0.5 rounded-full font-bold">12</span>
+                            </button>
+                            <button onclick="switchChatChannel('health')" id="channel-health" class="channel-btn w-full text-left px-4 py-3 rounded-2xl font-semibold text-sm flex items-center justify-between text-gray-700 hover:bg-gray-200 transition">
+                                <span><i class="fa-solid fa-heart-pulse mr-2 text-red-500"></i> Health & Daily Care</span>
+                                <span class="bg-gray-200 text-gray-700 text-xs px-2 py-0.5 rounded-full font-bold">8</span>
+                            </button>
+                            <button onclick="switchChatChannel('tech')" id="channel-tech" class="channel-btn w-full text-left px-4 py-3 rounded-2xl font-semibold text-sm flex items-center justify-between text-gray-700 hover:bg-gray-200 transition">
+                                <span><i class="fa-solid fa-mobile-screen-button mr-2 text-blue-500"></i> Tech & Phone Tips</span>
+                                <span class="bg-gray-200 text-gray-700 text-xs px-2 py-0.5 rounded-full font-bold">15</span>
+                            </button>
+                            <button onclick="switchChatChannel('cooking')" id="channel-cooking" class="channel-btn w-full text-left px-4 py-3 rounded-2xl font-semibold text-sm flex items-center justify-between text-gray-700 hover:bg-gray-200 transition">
+                                <span><i class="fa-solid fa-utensils mr-2 text-amber-500"></i> Cooking & Recipes</span>
+                                <span class="bg-gray-200 text-gray-700 text-xs px-2 py-0.5 rounded-full font-bold">5</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Pre-made Stickers Toolbar -->
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                        <p class="text-xs font-bold text-gray-500 mb-2">QUICK STICKERS (TAP TO SEND):</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="sendQuickSticker('👋 สวัสดีครับ/ค่ะ (Good Day!)')" class="bg-white border border-gray-300 hover:bg-amber-50 p-2 rounded-xl text-xs font-semibold text-gray-700 shadow-sm transition">
+                                👋 Good Day!
+                            </button>
+                            <button onclick="sendQuickSticker('❤️ ขอบคุณมากครับ/ค่ะ (Thank You!)')" class="bg-white border border-gray-300 hover:bg-amber-50 p-2 rounded-xl text-xs font-semibold text-gray-700 shadow-sm transition">
+                                ❤️️ Thank You!
+                            </button>
+                            <button onclick="sendQuickSticker('🌸 ขอให้เป็นวันที่สดใส (Have a bright day!)')" class="bg-white border border-gray-300 hover:bg-amber-50 p-2 rounded-xl text-xs font-semibold text-gray-700 shadow-sm transition">
+                                🌸 Bright Day!
+                            </button>
+                            <button onclick="sendQuickSticker('👍 เห็นด้วยเลยครับ (Agreed!)')" class="bg-white border border-gray-300 hover:bg-amber-50 p-2 rounded-xl text-xs font-semibold text-gray-700 shadow-sm transition">
+                                👍 Agreed!
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Active Chat Area -->
+                <div class="flex-1 flex flex-col justify-between bg-ivory p-4">
+                    <!-- Chat Header -->
+                    <div class="border-b border-gray-200 pb-3 flex justify-between items-center">
+                        <h4 id="active-channel-title" class="font-bold text-teal-800 text-lg flex items-center">
+                            <i class="fa-solid fa-seedling mr-2 text-sage-500"></i> Gardening & Backyard
+                        </h4>
+                        <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full"><i class="fa-solid fa-circle text-[8px] mr-1 text-emerald-500"></i> Active Community</span>
+                    </div>
+
+                    <!-- Chat Messages Stream -->
+                    <div id="chat-stream" class="flex-1 overflow-y-auto my-4 space-y-3 pr-2">
+                        <!-- Message 1 -->
+                        <div class="flex items-start space-x-3">
+                            <div class="w-9 h-9 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold text-sm">ป้า</div>
+                            <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-200 max-w-md">
+                                <span class="text-xs text-amber-600 font-bold block mb-1">Auntie Mali</span>
+                                <p class="text-sm text-gray-800">My organic basil plants are growing so well this week! Anyone want seeds?</p>
+                            </div>
+                        </div>
+                        <!-- Message 2 -->
+                        <div class="flex items-start space-x-3 justify-end">
+                            <div class="bg-sage-500 text-white p-3 rounded-2xl shadow-sm max-w-md">
+                                <span class="text-xs text-sage-100 font-bold block mb-1">Uncle Somchai</span>
+                                <p class="text-sm">👋 I would love some seeds! I will swap with my fresh papaya.</p>
+                            </div>
+                            <div class="w-9 h-9 rounded-full bg-teal-800 text-white flex items-center justify-center font-bold text-sm">ลุง</div>
+                        </div>
+                    </div>
+
+                    <!-- Message Input Box -->
+                    <form onsubmit="handleSendChatMessage(event)" class="flex gap-2">
+                        <input type="text" id="chat-input" placeholder="Type a message or use quick buttons on left..." class="flex-1 px-4 py-3 rounded-2xl border border-gray-300 focus:outline-none focus:border-sage-500 text-sm shadow-sm" required>
+                        <button type="submit" class="bg-sage-500 hover:bg-sage-600 text-white font-bold px-6 py-3 rounded-2xl text-sm transition shadow">
+                            Send <i class="fa-solid fa-paper-plane ml-1"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. HEALTH CONSULTATION TAB -->
+        <section id="tab-health" class="tab-content hidden space-y-6">
+            
+            <!-- Health Section Header -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-gray-200 shadow-sm">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                    <div>
+                        <span class="bg-red-100 text-red-600 font-bold px-3 py-1 rounded-full text-xs uppercase mb-2 inline-block">For All Ages & Families</span>
+                        <h2 class="text-2xl font-bold text-teal-800">Health & Wellness Consultation</h2>
+                        <p class="text-gray-600 text-sm">Accessible advice from medical volunteers and AI health guidance.</p>
+                    </div>
+
+                    <!-- Filter Buttons by Age Group -->
+                    <div class="flex flex-wrap gap-2 text-xs font-bold">
+                        <button onclick="filterHealthAdvice('all')" class="px-3 py-1.5 rounded-xl bg-sage-500 text-white">All Advice</button>
+                        <button onclick="filterHealthAdvice('senior')" class="px-3 py-1.5 rounded-xl bg-gray-100 text-gray-700 hover:bg-sage-100">Senior Health</button>
+                        <button onclick="filterHealthAdvice('family')" class="px-3 py-1.5 rounded-xl bg-gray-100 text-gray-700 hover:bg-sage-100">Family & Kids</button>
+                        <button onclick="filterHealthAdvice('mental')" class="px-3 py-1.5 rounded-xl bg-gray-100 text-gray-700 hover:bg-sage-100">Mental Wellness</button>
+                    </div>
+                </div>
+
+                <!-- Ask Question Form Box -->
+                <div class="bg-teal-50 p-5 rounded-2xl border border-teal-200 mb-8">
+                    <h3 class="font-bold text-teal-900 text-base mb-2"><i class="fa-solid fa-hospital-user text-teal-700 mr-2"></i> Ask a Health Volunteer Question</h3>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input type="text" id="health-q-input" placeholder="e.g., Simple stretches for lower back pain, or food tips for blood pressure..." class="flex-1 px-4 py-3 rounded-xl border border-teal-200 text-sm focus:outline-none focus:ring-2 focus:ring-sage-500">
+                        <button onclick="submitHealthQuestion()" class="bg-teal-800 hover:bg-teal-900 text-white font-bold px-6 py-3 rounded-xl text-sm transition shrink-0">
+                            Submit Question <i class="fa-solid fa-paper-plane ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Verified Health Tip Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- Tip 1 -->
+                    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                        <div class="flex items-center space-x-2 text-amber-500 mb-2">
+                            <i class="fa-solid fa-person-walking text-xl"></i>
+                            <span class="text-xs font-bold text-gray-500">Senior Care</span>
+                        </div>
+                        <h4 class="font-bold text-teal-800 text-base mb-2">3 Daily Stretches for Joint Mobility</h4>
+                        <p class="text-gray-600 text-sm mb-4">Gentle leg lifts and ankle circles performed every morning reduce knee stiffness significantly.</p>
+                        <button onclick="speakText('การยืดเหยียดข้อต่อเบาๆ ทุกเช้าช่วยลดอาการข้อเข่าติด')" class="text-sage-600 font-bold text-xs flex items-center hover:underline">
+                            <i class="fa-solid fa-volume-high mr-1"></i> Read Out Loud
+                        </button>
+                    </div>
+
+                    <!-- Tip 2 -->
+                    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                        <div class="flex items-center space-x-2 text-teal-600 mb-2">
+                            <i class="fa-solid fa-apple-whole text-xl"></i>
+                            <span class="text-xs font-bold text-gray-500">Family & Nutrition</span>
+                        </div>
+                        <h4 class="font-bold text-teal-800 text-base mb-2">Low-Sodium Thai Soups Recipe</h4>
+                        <p class="text-gray-600 text-sm mb-4">Using natural mushroom and coriander root broth keeps flavor rich without raising blood pressure.</p>
+                        <button onclick="speakText('การใช้ต้มซุปจากรากผักชีและเห็ดสดช่วยเพิ่มรสชาติโดยไม่ต้องใส่เกลือมาก')" class="text-sage-600 font-bold text-xs flex items-center hover:underline">
+                            <i class="fa-solid fa-volume-high mr-1"></i> Read Out Loud
+                        </button>
+                    </div>
+
+                    <!-- Tip 3 -->
+                    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                        <div class="flex items-center space-x-2 text-indigo-500 mb-2">
+                            <i class="fa-solid fa-face-smile text-xl"></i>
+                            <span class="text-xs font-bold text-gray-500">Mental Wellness</span>
+                        </div>
+                        <h4 class="font-bold text-teal-800 text-base mb-2">5-Minute Evening Meditation</h4>
+                        <p class="text-gray-600 text-sm mb-4">Deep breathing exercises before sleep help quiet anxious thoughts and improve sleep depth.</p>
+                        <button onclick="speakText('การฝึกหายใจลึกๆ 5 นาทีก่อนนอนช่วยให้อารมณ์ผ่อนคลายและหลับสนิท')" class="text-sage-600 font-bold text-xs flex items-center hover:underline">
+                            <i class="fa-solid fa-volume-high mr-1"></i> Read Out Loud
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. ONLINE GAMES TAB -->
+        <section id="tab-games" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-gray-200 shadow-sm">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-teal-800">Senior-Friendly Brain Games</h2>
+                    <p class="text-gray-600 text-sm">Large digits, easy touch controls, and automatic callers for fun mental exercise.</p>
+                </div>
+
+                <!-- Bingo Game Feature -->
+                <div class="bg-amber-50 p-6 rounded-3xl border border-amber-200 mb-8">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                        <div>
+                            <span class="bg-amber-500 text-teal-900 font-bold px-3 py-1 rounded-full text-xs mb-2 inline-block">Interactive Game</span>
+                            <h3 class="text-2xl font-extrabold text-teal-900">Large-Digit Senior Bingo</h3>
+                            <p class="text-gray-700 text-sm">Click 'Call Next Number' and click the matching number on your ticket below!</p>
+                        </div>
+                        <button onclick="callBingoNumber()" class="bg-amber-500 hover:bg-amber-600 text-teal-900 font-extrabold text-lg px-8 py-4 rounded-2xl shadow-lg transition transform active:scale-95">
+                            <i class="fa-solid fa-bullhorn mr-2"></i> Call Next Number
+                        </button>
+                    </div>
+
+                    <!-- Current Called Number Display -->
+                    <div class="flex items-center justify-center my-6">
+                        <div class="bg-white border-4 border-amber-500 rounded-full w-28 h-28 flex flex-col items-center justify-center shadow-inner">
+                            <span class="text-xs text-gray-500 font-bold uppercase">Called</span>
+                            <span id="called-bingo-num" class="text-4xl font-extrabold text-teal-800">--</span>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Bingo Card Board -->
+                    <div class="max-w-md mx-auto">
+                        <div class="grid grid-cols-5 gap-2 text-center">
+                            <!-- Header -->
+                            <div class="font-extrabold text-amber-600 text-xl py-2">B</div>
+                            <div class="font-extrabold text-amber-600 text-xl py-2">I</div>
+                            <div class="font-extrabold text-amber-600 text-xl py-2">N</div>
+                            <div class="font-extrabold text-amber-600 text-xl py-2">G</div>
+                            <div class="font-extrabold text-amber-600 text-xl py-2">O</div>
+
+                            <!-- Board Cells -->
+                            <button onclick="toggleBingoCell(this)" class="bingo-cell bg-white text-gray-800 font-bold text-2xl py-4 rounded-xl border border-amber-200 shadow hover:bg-amber-100">7</button>
+                            <button onclick="toggleBingoCell(this)" class="bingo-cell bg-white text-gray-800 font-bold text-2xl py-4 rounded-xl border border-amber-200 shadow hover:bg-amber-100">18</button>
+                            <button onclick="toggleBingoCell(this)" class="bingo-cell bg-white text-gray-800 font-bold text-2xl py-4 rounded-xl border border-amber-200 shadow hover:bg-amber-100">33</button>
+                            <button onclick="toggleBingoCell(this)" class="bingo-cell bg-white text-gray-800 font-bold text-2xl py-4 rounded-xl border border-amber-200 shadow hover:bg-amber-100">52</button>
+                            <button onclick="toggleBingoCell(this)" class="bingo-cell bg-white text-gray-800 font-bold text-2xl py-4 rounded-xl border border-amber-200 shadow hover:bg-amber-100">64</button>
+
+                            <button onclick="toggleBingoCell(this)" class="bingo-cell bg-white text-gray-800 font-bold text-2xl py-4 rounded-xl border border-amber-200 shadow hover:bg-amber-100">12</button>
+                            <button onclick="toggleBingoCell(this)" class="bingo-cell bg-white text-gray-800 font-bold text-2xl py-4 rounded-xl border border-amber-200 shadow hover:bg-amber-100">25</button>
+                            <button onclick="toggleBingoCell(this)" class="bingo-cell bg-amber-500 text-teal-900 font-bold text-xl py-4 rounded-xl border border-amber-300 shadow">FREE</button>
+                            <button onclick="toggleBingoCell(this)" class="bingo-cell bg-white text-gray-800 font-bold text-2xl py-4 rounded-xl border border-amber-200 shadow hover:bg-amber-100">49</button>
+                            <button onclick="toggleBingoCell(this)" class="bingo-cell bg-white text-gray-800 font-bold text-2xl py-4 rounded-xl border border-amber-200 shadow hover:bg-amber-100">71</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. SHARE & LEARN TAB -->
+        <section id="tab-learn" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-gray-200 shadow-sm">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-teal-800">Community Tutorials & Skills</h2>
+                        <p class="text-gray-600 text-sm">Pass down knowledge! Simple step-by-step guides shared by elders and community members.</p>
+                    </div>
+                    <button onclick="openPostTutorialModal()" class="bg-sage-500 hover:bg-sage-600 text-white font-bold px-5 py-3 rounded-2xl text-sm transition shadow">
+                        <i class="fa-solid fa-pen-to-square mr-2"></i> Share Your Tutorial
+                    </button>
+                </div>
+
+                <!-- Tutorials Cards Stream -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="tutorials-grid">
+                    
+                    <!-- Tutorial 1 -->
+                    <div class="bg-ivory p-6 rounded-2xl border border-gray-200 flex flex-col justify-between">
+                        <div>
+                            <span class="bg-emerald-100 text-emerald-800 font-bold text-xs px-2.5 py-1 rounded-full mb-3 inline-block">Gardening Hack</span>
+                            <h3 class="text-xl font-bold text-teal-800 mb-2">How to Grow Organic Chili in Recycled Plastic Bottles</h3>
+                            <p class="text-gray-600 text-sm mb-4">Step-by-step photos showing how to make self-watering bottle pots for apartment balconies.</p>
+                        </div>
+                        <div class="flex items-center justify-between text-xs text-gray-500 pt-4 border-t border-gray-200">
+                            <span>Posted by: <strong>Grandma Sompid</strong></span>
+                            <button onclick="alert('Tutorial opened!')" class="text-sage-600 font-bold hover:underline">Read Guide →</button>
+                        </div>
+                    </div>
+
+                    <!-- Tutorial 2 -->
+                    <div class="bg-ivory p-6 rounded-2xl border border-gray-200 flex flex-col justify-between">
+                        <div>
+                            <span class="bg-amber-100 text-amber-800 font-bold text-xs px-2.5 py-1 rounded-full mb-3 inline-block">Thai Desserts</span>
+                            <h3 class="text-xl font-bold text-teal-800 mb-2">Traditional Mango Sticky Rice Secret Recipe</h3>
+                            <p class="text-gray-600 text-sm mb-4">A 50-year-old family technique to make coconut milk aromatic using fresh pandan leaves.</p>
+                        </div>
+                        <div class="flex items-center justify-between text-xs text-gray-500 pt-4 border-t border-gray-200">
+                            <span>Posted by: <strong>Chef Boonmee</strong></span>
+                            <button onclick="alert('Tutorial opened!')" class="text-sage-600 font-bold hover:underline">Read Guide →</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- RSVP MODAL DIALOG -->
+    <div id="rsvp-modal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative animate-fade-in">
+            <button onclick="closeRsvpModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold">✕</button>
+            <h3 class="text-xl font-bold text-teal-800 mb-1">Sign Up for Event</h3>
+            <p id="rsvp-event-name" class="text-sm text-amber-600 font-bold mb-4">Event Name Here</p>
+            
+            <form onsubmit="handleRsvpSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Your Name / ชื่อของท่าน</label>
+                    <input type="text" required placeholder="e.g. Uncle Wichai" class="w-full px-4 py-3 rounded-xl border border-gray-300 text-sm focus:outline-none focus:border-sage-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Phone Number / เบอร์โทรศัพท์</label>
+                    <input type="tel" required placeholder="081-XXX-XXXX" class="w-full px-4 py-3 rounded-xl border border-gray-300 text-sm focus:outline-none focus:border-sage-500">
+                </div>
+                <button type="submit" class="w-full bg-sage-500 hover:bg-sage-600 text-white font-bold py-3 rounded-xl text-sm transition shadow">
+                    Confirm Free Sign Up
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-teal-900 text-white py-8 border-t border-teal-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-3">
+            <p class="font-bold text-lg">Suk-Jai (สุขใจ) — Community Platform</p>
+            <p class="text-xs text-sage-100 max-w-xl mx-auto">Designed for accessibility, social wellness, and intergenerational support under PDPA 2019 guidelines.</p>
+            <p class="text-xs text-amber-400">© 2026 Suk-Jai Founders Team. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function changeFontSize(size) {
+            const html = document.documentElement;
+            html.classList.remove('font-sm', 'font-md', 'font-lg', 'font-xl');
+            html.classList.add('font-' + size);
+        }
+
+        function toggleHighContrast() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        let speaking = false;
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // stop current speech
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'th-TH'; // Default to Thai voice if available
+                utterance.rate = 0.9; // Slower rate for clarity
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Speech Synthesis is not supported in this browser.");
+            }
+        }
+
+        function toggleSpeech() {
+            const ttsText = document.getElementById('ttsText');
+            if (!speaking) {
+                speakText("ยินดีต้อนรับสู่ สุขใจ เว็บไซต์สังคมสำหรับทุกวัย สามารถเลือกเมนูเพื่อใช้งานได้เลยครับ");
+                ttsText.innerText = "Playing Audio...";
+                speaking = true;
+                setTimeout(() => {
+                    ttsText.innerText = "Audio Assistant";
+                    speaking = false;
+                }, 4000);
+            } else {
+                window.speechSynthesis.cancel();
+                ttsText.innerText = "Audio Assistant";
+                speaking = false;
+            }
+        }
+
+        function showTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            // Remove active style from buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-sage-500', 'text-white', 'shadow-md');
+                btn.classList.add('text-gray-700');
+            });
+
+            // Show selected tab
+            const targetTab = document.getElementById('tab-' + tabId);
+            if (targetTab) targetTab.classList.remove('hidden');
+
+            // Highlight button
+            const targetBtn = document.getElementById('nav-' + tabId);
+            if (targetBtn) {
+                targetBtn.classList.add('bg-sage-500', 'text-white', 'shadow-md');
+                targetBtn.classList.remove('text-gray-700');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchChatChannel(channelKey) {
+            // Reset channel buttons
+            document.querySelectorAll('.channel-btn').forEach(btn => {
+                btn.classList.remove('bg-sage-500', 'text-white', 'shadow');
+                btn.classList.add('text-gray-700');
+            });
+
+            const activeBtn = document.getElementById('channel-' + channelKey);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-sage-500', 'text-white', 'shadow');
+                activeBtn.classList.remove('text-gray-700');
+            }
+
+            const title = document.getElementById('active-channel-title');
+            const stream = document.getElementById('chat-stream');
+
+            if (channelKey === 'gardening') {
+                title.innerHTML = '<i class="fa-solid fa-seedling mr-2 text-sage-500"></i> Gardening & Backyard';
+            } else if (channelKey === 'health') {
+                title.innerHTML = '<i class="fa-solid fa-heart-pulse mr-2 text-red-500"></i> Health & Daily Care';
+            } else if (channelKey === 'tech') {
+                title.innerHTML = '<i class="fa-solid fa-mobile-screen-button mr-2 text-blue-500"></i> Tech & Phone Tips';
+            } else if (channelKey === 'cooking') {
+                title.innerHTML = '<i class="fa-solid fa-utensils mr-2 text-amber-500"></i> Cooking & Recipes';
+            }
+        }
+
+        function handleSendChatMessage(e) {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            if (input.value.trim() !== '') {
+                appendChatMessage("You", input.value);
+                input.value = '';
+            }
+        }
+
+        function sendQuickSticker(text) {
+            appendChatMessage("You", text);
+        }
+
+        function appendChatMessage(author, message) {
+            const stream = document.getElementById('chat-stream');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = "flex items-start space-x-3 justify-end animate-fade-in";
+            msgDiv.innerHTML = `
+                <div class="bg-sage-500 text-white p-3 rounded-2xl shadow-sm max-w-md">
+                    <span class="text-xs text-sage-100 font-bold block mb-1">${author}</span>
+                    <p class="text-sm">${message}</p>
+                </div>
+                <div class="w-9 h-9 rounded-full bg-teal-800 text-white flex items-center justify-center font-bold text-sm">คุณ</div>
+            `;
+            stream.appendChild(msgDiv);
+            stream.scrollTop = stream.scrollHeight;
+        }
+
+        function callBingoNumber() {
+            const numDisplay = document.getElementById('called-bingo-num');
+            const randomNum = Math.floor(Math.random() * 75) + 1;
+            numDisplay.innerText = randomNum;
+            speakText("เรียกหมายเลข " + randomNum);
+        }
+
+        function toggleBingoCell(btn) {
+            btn.classList.toggle('bg-amber-500');
+            btn.classList.toggle('text-white');
+        }
+
+        function openRsvpModal(eventName) {
+            document.getElementById('rsvp-event-name').innerText = eventName;
+            document.getElementById('rsvp-modal').classList.remove('hidden');
+        }
+
+        function closeRsvpModal() {
+            document.getElementById('rsvp-modal').classList.add('hidden');
+        }
+
+        function handleRsvpSubmit(e) {
+            e.preventDefault();
+            alert("Thank you! Your RSVP registration was successful. We will send an SMS confirmation.");
+            closeRsvpModal();
+        }
+
+        function submitHealthQuestion() {
+            const q = document.getElementById('health-q-input').value;
+            if(q) {
+                alert("Question submitted! A healthcare volunteer will answer shortly.");
+                document.getElementById('health-q-input').value = '';
+            }
+        }
+    </script>
+</body>
+</html>
